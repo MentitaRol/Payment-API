@@ -6,13 +6,13 @@ const User = require('../models/user.model');
 // Controller to handle POST request to register a new transaction
 exports.NewTransaction = async(request, response, next) => {
     // Destructure user info from request body
-    const { amount, description, status, payment_method} = request.body;
+    const { amount, description, status, paymentMethod} = request.body;
     // Get the user id from the authenticated user
-    const user_id = request.user.id;
+    const userId = request.user.id;
 
     try{
         // Check if the user exists
-        const user = await User.findByPk(user_id);
+        const user = await User.findByPk(userId);
 
         if (!user) {
             throw new Error('User not found');
@@ -22,7 +22,7 @@ exports.NewTransaction = async(request, response, next) => {
         const reference = `TX-${Date.now()}-${uuidv4().substring(0, 8)}`;
 
         // Create a new transaction
-        const newTransaction = await Transactions.createTransaction(user_id, amount, description, status, payment_method, reference);
+        const newTransaction = await Transactions.createTransaction(userId, amount, description, status, paymentMethod, reference);
 
         response.status(200).json(newTransaction);
     }catch(error){
@@ -35,7 +35,7 @@ exports.NewTransaction = async(request, response, next) => {
 exports.authorizeTransaction = async(request, response, next) => {
     try{
         // Check if the transaction exists
-        const transaction = await Transactions.findByPk(request.params.transaction_id);
+        const transaction = await Transactions.findByPk(request.params.transactionId);
 
         if (!transaction) {
             throw new Error('Transaction not found');
@@ -51,7 +51,7 @@ exports.authorizeTransaction = async(request, response, next) => {
 
         // Authorize the transaction
         const updateTransaction = await Transactions.authorizeTransaction(
-            request.params.transaction_id, 
+            request.params.transactionId, 
             authorizationCode, 
             new Date()
         );

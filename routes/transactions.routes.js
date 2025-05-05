@@ -6,5 +6,5 @@ const auth = require('../middleware/auth');
 // Create a new transaction
 router.post('/transaction/create-new', auth, controller.NewTransaction);
 // Authorize a transaction
-router.post('/transaction/authorize-transaction/:transaction_id', controller.authorizeTransaction);
+router.post('/transaction/authorize-transaction/:transactionId', controller.authorizeTransaction);
 module.exports = router;
