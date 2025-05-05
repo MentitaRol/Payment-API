@@ -12,4 +12,29 @@ module.exports =  class Transaction {
         );
         return result.rows[0];
     }
+
+    // Consult a transaction by the ID
+    static async findByPk(transaction_id) {
+        const result = await db.query(`
+            SELECT * 
+            FROM transactions 
+            WHERE transaction_id = $1`, 
+            [transaction_id]
+        );
+        return result.rows[0];
+    }
+
+    // Authorize a transaction
+    static async authorizeTransaction(transaction_id, authorization_code, authorization_date){
+        const result = await db.query(`
+            UPDATE transactions 
+            SET authorization_code = $1, 
+            authorization_date = $2,
+            status = $3
+            WHERE transaction_id = $4
+            RETURNING *`,
+            [authorization_code, authorization_date, 'authorized', transaction_id]
+        );
+        return result.rows[0];
+    }
 };
