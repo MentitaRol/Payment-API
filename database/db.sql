@@ -18,6 +18,6 @@ CREATE TABLE transactions (
     payment_method payment_method NOT NULL DEFAULT 'cash',
     reference VARCHAR(255) UNIQUE NOT NULL,
     authorization_code VARCHAR(255),
-    authorization_date DATE NOT NULL,
+    authorization_date DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

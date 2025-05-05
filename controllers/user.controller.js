@@ -1,5 +1,15 @@
-const { request, response } = require("express");
+const { request, response } = require('express');
 const Users = require('../models/user.model');
+const jwt = require('jsonwebtoken');
+
+// Generate token
+const generateToken = (user) => {
+    return jwt.sign(
+        { id: user.user_id, email: user.email }, 
+        process.env.JWT_SECRET, 
+        {expiresIn: process.env.JWT_EXPIRES_IN}
+    );
+};
 
 // Controller to handle POST request to register a new user
 exports.postUsers = async(request, response, next) => {
@@ -16,7 +26,9 @@ exports.postUsers = async(request, response, next) => {
 
         // Register new user
         const registerUser = await Users.postUsers(name, email, password);
-        response.status(200).json(registerUser);
+        const token = generateToken(registerUser);
+
+        response.status(200).json({ user: registerUser, token });
     }catch(error){
         console.error('Error inserting users', error);
         response.status(500).json({message: 'Internal error when inserting users'});
