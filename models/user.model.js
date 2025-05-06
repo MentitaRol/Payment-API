@@ -29,5 +29,16 @@ module.exports = class User {
         );
         return result.rows[0];
     }
+
+    // Get user history
+    static async userHistoty(userId){
+        const result = await db.query(`
+            SELECT * FROM transactions
+            WHERE "userId" = $1
+            ORDER BY "createdAt" DESC`,
+            [userId]
+        );
+        return result.rows;
+    }
 };
 

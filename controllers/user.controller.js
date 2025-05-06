@@ -34,3 +34,26 @@ exports.postUsers = async(request, response, next) => {
         response.status(500).json({message: 'Internal error when inserting users'});
     }
 };
+
+// Controller to consult a user history
+exports.userHistory = async(request, response, next) => {
+    const userId = request.params.userId;
+
+    try{
+        // Check if the user exists
+        const user = await Users.findByPk(userId);
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        // Get a user history
+        const userHistory = await Users.userHistoty(userId);
+
+        response.status(200).json(userHistory);
+
+    }catch(error){
+        console.error('Error getting a user history', error);
+        response.status(500).json({message: 'Internal error when getting a user history'});
+    }
+}

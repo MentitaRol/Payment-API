@@ -3,7 +3,7 @@ const Transactions = require('../models/transactions.model');
 const { v4: uuidv4 } = require('uuid');
 const User = require('../models/user.model');
 
-// Controller to handle POST request to register a new transaction
+// Controller to register a new transaction
 exports.NewTransaction = async(request, response, next) => {
     // Destructure user info from request body
     const { amount, description, status, paymentMethod} = request.body;
@@ -31,7 +31,7 @@ exports.NewTransaction = async(request, response, next) => {
     }
 };
 
-// Controller to handle POST request to update a transaction and authorize it
+// Controller to update a transaction and authorize it
 exports.authorizeTransaction = async(request, response, next) => {
     try{
         // Check if the transaction exists
