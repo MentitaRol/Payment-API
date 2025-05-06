@@ -13,6 +13,4 @@ app.use(userRoutes);
 const transactionRoutes = require('./routes/transactions.routes');
 app.use(transactionRoutes);
 
-app.listen(3002, () => {
-    console.log("Server running at http://localhost:3002");
-})
+module.exports = app;
