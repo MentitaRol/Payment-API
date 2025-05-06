@@ -4,7 +4,8 @@
   "description": "REST API for payment system",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon",
+    "dev": "nodemon app.js",
+    "start": "node app.js",
     "test": "jest",
     "migrate": "node util/migration.js"
   },
