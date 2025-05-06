@@ -43,7 +43,7 @@ exports.authorizeTransaction = async(request, response, next) => {
 
         // Check if the transaction status is 'pending'
         if (transaction.status !== 'pending') {
-            throw new Error(`La transacción no puede ser autorizada. Estado actual: ${transaction.status}`);
+            throw new Error(`The transaction cannot be authorized, current status: ${transaction.status}`);
         }
 
         // Create an authorization code
@@ -63,3 +63,28 @@ exports.authorizeTransaction = async(request, response, next) => {
         response.status(500).json({message: 'Internal error when updating a transaction'});
     }
 };
+
+// Controller to process a transaction that is authorized
+exports.processTransaction = async(request, response, next) => {
+    try{
+        // Check if the transaction exist
+        const transaction = await Transactions.findByPk(request.params.transactionId);
+
+        if(!transaction){
+            throw new Error('Transaction not found');
+        }
+
+        // Check if the transaction status is 'authorized'
+        if (transaction.status !== 'authorized') {
+            throw new Error(`The transaction cannot be processed, current status: ${transaction.status}`);
+        }
+
+        // Process the transaction
+        const processTransaction = await Transactions.processTransaction(request.params.transactionId);
+        response.status(200).json(processTransaction);
+
+    }catch(error){
+        console.error('Error processing a transaction', error);
+        response.status(500).json({message: 'Internal error when processing a transaction'});
+    }
+}; 
