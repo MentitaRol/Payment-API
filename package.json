@@ -1,0 +1,33 @@
+{
+  "name": "payment-api",
+  "version": "1.0.0",
+  "description": "REST API for payment system",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MentitaRol/Payment-API.git"
+  },
+  "author": "Fernanda Valdez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MentitaRol/Payment-API/issues"
+  },
+  "homepage": "https://github.com/MentitaRol/Payment-API#readme",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.10",
+    "pg": "^8.15.6",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.1.0"
+  }
+}
